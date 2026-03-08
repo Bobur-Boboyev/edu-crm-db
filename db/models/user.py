@@ -6,6 +6,7 @@ from .group import Group, Enrollment
 
 
 class UserRole:
+    ADMIN = "admin"
     STUDENT = "student"
     TEACHER = "teacher"
 
@@ -18,11 +19,15 @@ class User(Base, TimestampMixin):
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
     role: Mapped[str] = mapped_column(String(50), nullable=False)
 
-    student_profile: Mapped["Student"] = relationship("Student", uselist=False, back_populates="user")
-    teacher_profile: Mapped["Teacher"] = relationship("Teacher", uselist=False, back_populates="user")
+    student_profile: Mapped["Student"] = relationship(
+        "Student", uselist=False, back_populates="user"
+    )
+    teacher_profile: Mapped["Teacher"] = relationship(
+        "Teacher", uselist=False, back_populates="user"
+    )
 
 
-class Student(User):
+class Student(Base):
     __tablename__ = "students"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -32,10 +37,15 @@ class Student(User):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
 
     user: Mapped[User] = relationship("User", back_populates="student_profile")
-    enrollments: Mapped["Enrollment"] = relationship("Enrollment", back_populates="student")
+    enrollments: Mapped["Enrollment"] = relationship(
+        "Enrollment", back_populates="student"
+    )
+    payments: Mapped[list["Payment"]] = relationship(
+        "Payment", back_populates="student"
+    )
 
 
-class Teacher(User):
+class Teacher(Base):
     __tablename__ = "teachers"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -46,4 +56,4 @@ class Teacher(User):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
 
     user: Mapped[User] = relationship("User", back_populates="teacher_profile")
-    course: Mapped[list["Group"]] = relationship("Group", back_populates="teacher")
+    groups: Mapped[list["Group"]] = relationship("Group", back_populates="teacher")

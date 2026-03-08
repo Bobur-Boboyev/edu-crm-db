@@ -1,0 +1,22 @@
+from datetime import datetime
+
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import Integer, String, ForeignKey, TIMESTAMP
+
+from .base import Base
+
+
+class Lesson(Base):
+    __tablename__ = "lessons"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    group_id: Mapped[int] = mapped_column(
+        ForeignKey("groups.id", ondelete="CASCADE"), nullable=False
+    )
+    teacher_id: Mapped[int] = mapped_column(
+        ForeignKey("teachers.id", ondelete="CASCADE"), nullable=False
+    )
+    date: Mapped[datetime] = mapped_column(TIMESTAMP, nullable=False)
+    topic: Mapped[str] = mapped_column(String, nullable=False)
+
+    group: Mapped["Group"] = relationship("Group", back_populates="lessons")
