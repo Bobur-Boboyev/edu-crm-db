@@ -34,13 +34,12 @@ class Group(Base, TimestampMixin):
     payments: Mapped[list["Payment"]] = relationship("Payment", back_populates="group")
     lessons: Mapped[list["Lesson"]] = relationship("Lesson", back_populates="group")
 
-
     def __str__(self):
         return f"(id={self.id}, course_id={self.course_id}, teacher_id={self.teacher_id}, capacity={self.capacity}, status={self.status})"
-    
+
     def __repr__(self):
         return f"(id={self.id}, course_id={self.course_id}, teacher_id={self.teacher_id}, capacity={self.capacity}, status={self.status})"
-    
+
 
 class Enrollment(Base, TimestampMixin):
     __tablename__ = "enrollments"
@@ -55,7 +54,6 @@ class Enrollment(Base, TimestampMixin):
 
     student: Mapped["Student"] = relationship("Student", back_populates="enrollments")
     group: Mapped["Group"] = relationship("Group", back_populates="enrollments")
-
 
     def __str__(self):
         return f"Enrollment(id={self.id}, student_id={self.student_id}, group_id={self.group_id})"

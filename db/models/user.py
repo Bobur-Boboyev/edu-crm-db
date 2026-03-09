@@ -26,10 +26,9 @@ class User(Base, TimestampMixin):
         "Teacher", uselist=False, back_populates="user"
     )
 
-
     def __str__(self):
         return f"User(id={self.id}, username={self.username}, role={self.role})"
-    
+
     def __repr__(self):
         return f"User(id={self.id}, username={self.username}, role={self.role})"
 
@@ -51,7 +50,6 @@ class Student(Base):
         "Payment", back_populates="student"
     )
 
-
     def __str__(self):
         return f"Student(id={self.id}, first_name={self.first_name}, last_name={self.last_name}, phone={self.phone}), user_id={self.user_id})"
 
@@ -72,9 +70,8 @@ class Teacher(Base):
     user: Mapped[User] = relationship("User", back_populates="teacher_profile")
     groups: Mapped[list["Group"]] = relationship("Group", back_populates="teacher")
 
-
     def __str__(self):
         return f"Teacher(id={self.id}, first_name={self.first_name}, last_name={self.last_name}, email={self.email}, specialization={self.specialization}), user_id={self.user_id})"
-    
+
     def __repr__(self):
         return f"Teacher(id={self.id}, first_name={self.first_name}, last_name={self.last_name}, email={self.email}, specialization={self.specialization}), user_id={self.user_id})"

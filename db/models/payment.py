@@ -17,10 +17,8 @@ class Payment(Base, TimestampMixin):
     student: Mapped["Student"] = relationship("Student", back_populates="payments")
     group: Mapped["Group"] = relationship("Group", back_populates="payments")
 
+    def __repr__(self):
+        return f"Payment(id={self.id}, student_id={self.student_id}, group_id={self.group_id}, amount={self.amount})"
 
     def __repr__(self):
         return f"Payment(id={self.id}, student_id={self.student_id}, group_id={self.group_id}, amount={self.amount})"
-    
-    def __repr__(self):
-        return f"Payment(id={self.id}, student_id={self.student_id}, group_id={self.group_id}, amount={self.amount})"
-    

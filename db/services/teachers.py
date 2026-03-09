@@ -59,11 +59,13 @@ class TeacherService:
         self, group: Group, teacher: Teacher, date: date, topic: str = None
     ) -> Lesson:
         lesson_service = LessonService(session=self.session)
-        existing_lesson = lesson_service.get_lesson_by_date(group_id=group.id, date=date)
+        existing_lesson = lesson_service.get_lesson_by_date(
+            group_id=group.id, date=date
+        )
 
         if existing_lesson:
             raise ValueError("Lesson already scheduled for this date.")
-        
+
         if group.teacher_id != teacher.id:
             raise ValueError("Teacher is not assigned to this group.")
 

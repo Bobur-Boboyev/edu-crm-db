@@ -21,9 +21,8 @@ class Lesson(Base):
 
     group: Mapped["Group"] = relationship("Group", back_populates="lessons")
 
-
     def __str__(self):
         return f"Lesson(id={self.id}, group_id={self.group_id}, teacher_id={self.teacher_id}, date={self.date}, topic={self.topic})"
-    
+
     def __repr__(self):
         return f"Lesson(id={self.id}, group_id={self.group_id}, teacher_id={self.teacher_id}, date={self.date}, topic={self.topic})"
