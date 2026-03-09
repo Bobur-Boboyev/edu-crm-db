@@ -2,9 +2,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select, join
 
 from ..models import User, Student, UserRole, Group, Enrollment, Payment, Course
-from ..session import SessionLocal
-
-session = SessionLocal()
 
 
 class StudentService:
@@ -67,6 +64,3 @@ class StudentService:
             .filter_by(student_id=student.id, group_id=group.id)
             .first()
         )
-
-
-student_service = StudentService(session=session)

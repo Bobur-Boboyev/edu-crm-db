@@ -1,9 +1,6 @@
 from sqlalchemy.orm import Session
 
 from ..models import Student, Payment, Group
-from ..session import SessionLocal
-
-session = SessionLocal()
 
 
 class PaymentService:
@@ -27,6 +24,3 @@ class PaymentService:
 
     def get_payment_by_id(self, id: int) -> Payment:
         return self.session.query(Payment).filter_by(id=id).first()
-
-
-payment_service = PaymentService(session=session)

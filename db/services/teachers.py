@@ -3,12 +3,9 @@ from datetime import date
 from sqlalchemy.orm import Session
 from sqlalchemy import select, join
 
+from db.services.lessons import LessonService
+
 from ..models import User, Teacher, UserRole, Group, Lesson
-from .lessons import lesson_service
-from ..session import SessionLocal
-
-
-session = SessionLocal()
 
 
 class TeacherService:
@@ -61,10 +58,14 @@ class TeacherService:
     def create_lesson(
         self, group: Group, teacher: Teacher, date: date, topic: str = None
     ) -> Lesson:
+        lesson_service = LessonService(session=self.session)
         existing_lesson = lesson_service.get_lesson_by_date(group_id=group.id, date=date)
 
         if existing_lesson:
             raise ValueError("Lesson already scheduled for this date.")
+        
+        if group.teacher_id != teacher.id:
+            raise ValueError("Teacher is not assigned to this group.")
 
         lesson = Lesson(
             group_id=group.id, teacher_id=teacher.id, date=date, topic=topic
@@ -72,6 +73,3 @@ class TeacherService:
         self.session.add(lesson)
         self.session.commit()
         return lesson
-
-
-teacher_service = TeacherService(session=session)

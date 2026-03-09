@@ -1,10 +1,6 @@
-from datetime import date
 from sqlalchemy.orm import Session
 
 from ..models import Group, Course, Enrollment, Student, GroupStatus
-from ..session import SessionLocal
-
-session = SessionLocal()
 
 
 class groupService:
@@ -73,6 +69,3 @@ class groupService:
             .filter_by(student_id=student.id, group_id=group.id)
             .first()
         )
-
-
-group_service = groupService(session=session)

@@ -1,9 +1,6 @@
 from sqlalchemy.orm import Session
 
 from ..models import Course
-from ..session import SessionLocal
-
-session = SessionLocal()
 
 
 class CourseService:
@@ -53,6 +50,3 @@ class CourseService:
 
     def get_course_by_name(self, name: str) -> Course:
         return self.session.query(Course).filter_by(name=name).first()
-
-
-course_service = CourseService(session=session)

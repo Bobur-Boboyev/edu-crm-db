@@ -1,10 +1,7 @@
 from sqlalchemy.orm import Session
 
 from ..models import User, UserRole
-from ..session import SessionLocal
 from db.utils.hashing import hash_password
-
-session = SessionLocal()
 
 
 class UserService:
@@ -43,6 +40,3 @@ class UserService:
     def get_user_by_username(self, username: str) -> User:
         user = self.session.query(User).filter_by(username=username).first()
         return user
-
-
-user_service = UserService(session=session)

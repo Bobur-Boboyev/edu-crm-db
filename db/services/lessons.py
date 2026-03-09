@@ -2,9 +2,6 @@ from datetime import date
 from sqlalchemy.orm import Session
 
 from ..models import Lesson, Group, Teacher
-from ..session import SessionLocal
-
-session = SessionLocal()
 
 
 class LessonService:
@@ -55,6 +52,3 @@ class LessonService:
 
     def get_lesson_by_id(self, id: int) -> Lesson:
         return self.session.query(Lesson).filter_by(id=id).first()
-
-
-lesson_service = LessonService(session=session)
